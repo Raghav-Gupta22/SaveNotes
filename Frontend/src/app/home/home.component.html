@@ -1,0 +1,37 @@
+<nav
+  class="navbar navbar-expand-lg navbar-light bg-dark justify-content-between"
+>
+  <a class="navbar-brand text-white ms-2" href="#">Notes App</a>
+  <div>
+    <span class="navbar-text mr-5 text-white"> Welcome, {{ user.name }}! </span>
+  </div>
+  <div>
+    <button class="btn btn-success me-2" type="button" (click)="addNote()">
+      Add Note
+    </button>
+    <button class="btn btn-primary me-2" type="button" (click)="logout()">
+      Logout
+    </button>
+  </div>
+</nav>
+
+<div class="container mt-5 mb-5">
+  <div class="row">
+    <div class="col-lg-4 col-md-6 mb-4" *ngFor="let note of notes">
+      <div class="card h-100 shadow-sm p-3">
+        <div class="card-body">
+          <h5 class="card-title mb-3">{{ note.title }}</h5>
+          <p class="card-text text-muted">{{ note.description }}</p>
+          <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+              More
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button ngbDropdownItem (click)="delete(note.id)">Delete</button>
+              <button ngbDropdownItem (click)="edit(note)">Edit</button>
+            </div>
+        </div>
+        </div>
+      </div>
+  </div>
+</div>
