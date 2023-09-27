@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   Email: string = '';
   password: string = '';
   user = new User();
+  show: boolean = false;
 
   constructor(
     private userservice: UserserviceService,
