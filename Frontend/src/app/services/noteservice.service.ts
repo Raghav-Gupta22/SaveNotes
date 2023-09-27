@@ -25,25 +25,19 @@ export class NoteserviceService {
   public delete(noteId: any) {
     return this.http
       .delete('http://localhost:3000/' + noteId + '/delete')
-      .subscribe((response) => {
-        console.log(response);
-      });
+      .subscribe((response) => {});
   }
   public edit(noteId: any, note: any) {
-    return this.http
-      .put('http://localhost:3000/' + noteId + '/editNote',note)
-      .subscribe((response) => {
-        console.log(response);
-      });
+    return this.http.put('http://localhost:3000/' + noteId + '/editNote', note);
   }
-  public setNote(note :any){
+  public setNote(note: any) {
     localStorage.setItem('note', JSON.stringify(note));
   }
-  
-  public getNote(){
+
+  public getNote() {
     let note = localStorage.getItem('note');
-    if(note != null){
-      return JSON.parse(note)
+    if (note != null) {
+      return JSON.parse(note);
     }
   }
 }

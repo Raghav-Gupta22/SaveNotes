@@ -41,7 +41,6 @@ export class UserserviceService {
     return null;
   }
   //current User
-  
 
   public registerUser(user: User): Observable<any> {
     return this.http.post<any>('http://localhost:3000/user/register', user);

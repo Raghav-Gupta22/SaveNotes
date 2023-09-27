@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private authService: AuthserviceService,
     private router: Router,
-    private userService : UserserviceService
+    private userService: UserserviceService
   ) {}
 
   canActivate(

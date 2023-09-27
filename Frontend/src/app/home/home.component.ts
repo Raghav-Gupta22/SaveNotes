@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userservice.getUser();
-    console.log(this.user);
     this.noteservice.showNotes(this.user.id).subscribe(
       (data) => {
         this.notes = data;

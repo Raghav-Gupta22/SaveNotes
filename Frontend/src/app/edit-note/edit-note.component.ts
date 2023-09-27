@@ -26,9 +26,10 @@ export class EditNoteComponent implements OnInit {
         title: this.title,
         description: this.description,
       };
-      this.noteService.edit(this.note.id, newNote);
+      this.noteService.edit(this.note.id, newNote).subscribe(()=>{
+        this.router.navigate(['home']);
+      })
     }
-    this.router.navigate(['home']);
   }
   cancel(){
     this.router.navigate(['home'])
