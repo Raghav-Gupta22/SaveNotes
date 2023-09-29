@@ -30,17 +30,13 @@ import java.security.Principal;
     @CrossOrigin("*")
     @PostMapping("/generate-token")
     public ResponseEntity<?> generateToken(@RequestBody JwtRequest jwtRequest) throws Exception {
-        System.out.println(jwtRequest);
         try {
             authenticate(jwtRequest.getUserName(), jwtRequest.getPassword());
         } catch (UsernameNotFoundException e) {
-            e.printStackTrace();
             throw new Exception("User not found");
         }
         UserDetails userDetails = this.detailsServiceImpl.loadUserByUsername(jwtRequest.getUserName());
-        System.out.println(userDetails);
         String s = this.jwtService.generateToken(userDetails);
-        System.out.println("TOKEN" + s);
         return ResponseEntity.ok(new JwtResponse(s));
     }
 
@@ -48,10 +44,8 @@ import java.security.Principal;
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
-            e.printStackTrace();
             throw new Exception("User Disable");
         } catch (BadCredentialsException e) {
-            e.printStackTrace();
             throw new Exception("Bad Credentials!!");
         }
     }
@@ -59,7 +53,6 @@ import java.security.Principal;
     @GetMapping("/current-user")
     @CrossOrigin("*")
     public User getCurrentUser(Principal principal) {
-        System.out.println(principal.getName());
         return ((User) this.detailsServiceImpl.loadUserByUsername(principal.getName()));
     }
 }

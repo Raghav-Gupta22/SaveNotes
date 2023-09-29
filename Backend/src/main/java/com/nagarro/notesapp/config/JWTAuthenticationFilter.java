@@ -28,7 +28,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         final String authHeader = request.getHeader("Authorization");
-        System.out.println(authHeader);
 
         String username = null;
         String jwtToken = null;
@@ -36,16 +35,11 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
 
             jwtToken = authHeader.substring(7);
-            System.out.println(jwtToken);
             try {
                 username = this.jwtService.extractEmail(jwtToken);
-                System.out.println(username);
             } catch (ExpiredJwtException e) {
                 e.printStackTrace();
-                System.out.println("JWT Token expired");
             }
-        } else {
-            System.out.println("Invalid Token, not start with Bearer");
         }
 
         // Validate
@@ -63,10 +57,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
 
             }
-        } else {
-            System.out.println("Token is not valid");
         }
-
         filterChain.doFilter(request, response);
 
     }

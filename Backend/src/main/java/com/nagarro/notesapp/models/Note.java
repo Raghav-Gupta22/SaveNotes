@@ -23,7 +23,6 @@ public class Note {
     private String title;
 
     @Size(max = 500)
-    @Pattern(regexp = "^[a-zA-Z0-9@;& *+\\-]*$", message = "Only alphabets, numbers, @, ;, &, *, are allowed")
     private String description;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

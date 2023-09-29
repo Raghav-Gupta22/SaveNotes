@@ -17,7 +17,6 @@ public class UserServiceImpl implements UserService {
         User local = this.userRepository.getUserByEmail(user.getEmail());
 
         if (local != null) {
-            System.out.println("User exists");
             throw new Exception("User already present!");
         } else {
             local = this.userRepository.save(user);

@@ -17,13 +17,14 @@ import java.util.List;
 @ConditionalOnProperty(name = "scheduling.enabled", matchIfMissing = true)
 public class ScheduleConfig {
 
+    final int maxNotes = 10;
     @Autowired
     private NoteRepository noteRepository;
 
     @Autowired
     private UserRepository userRepository;
 
-    //    @Scheduled(fixedRate = 60000) //for minute
+//    @Scheduled(fixedRate = 60000) //for minute
     @Scheduled(fixedRate = 3600000) //for hour
     public void cleanupOldNotes() {
         List<User> usersWithExcessNotes = getUsersWithExcessNotes();
@@ -31,13 +32,12 @@ public class ScheduleConfig {
     }
 
     private List<User> getUsersWithExcessNotes() {
-        return userRepository.findUsersWithExcessNotes(10L);
+        return userRepository.findUsersWithExcessNotes((long)maxNotes);
     }
 
     private void deleteOldNotes(User user) {
         List<Note> notes = noteRepository.findNotesByUserOrderBylastEditDesc(user.getId());
-        int notesToKeep = 3;
-        for (int i = notesToKeep; i < notes.size(); i++) {
+        for (int i = maxNotes; i < notes.size(); i++) {
             Note noteToDelete = notes.get(i);
             noteRepository.delete(noteToDelete);
         }
