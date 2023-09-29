@@ -4,7 +4,10 @@
       <div class="card">
         <div class="card-header">Register</div>
         <div class="card-body">
-          <form>
+          <form
+            #registerForm="ngForm"
+            (ngSubmit)="registerForm.valid && register()"
+          >
             <div class="form-group">
               <label for="username">Username</label>
               <input
@@ -13,8 +16,15 @@
                 class="form-control"
                 [(ngModel)]="username"
                 name="username"
+                #usernameField="ngModel"
                 required
               />
+            </div>
+            <div
+              *ngIf="usernameField.invalid && usernameField.touched"
+              class="text-danger"
+            >
+              <small>Username is required </small>
             </div>
             <div class="form-group">
               <label for="email">Email</label>
@@ -24,36 +34,70 @@
                 class="form-control"
                 [(ngModel)]="email"
                 name="email"
+                #emailField="ngModel"
                 required
+                pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
               />
+            </div>
+            <div
+              *ngIf="emailField.invalid && emailField.touched"
+              class="text-danger"
+            >
+              <small> Email must be valid</small>
             </div>
             <div class="form-group">
               <label for="password">Password</label>
               <input
-                type="password"
+                [type]="showPassword ? 'text' : 'password'"
                 id="password"
                 class="form-control"
                 [(ngModel)]="password"
                 name="password"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                #passwordField="ngModel"
                 required
               />
             </div>
-            <div class="form-group">
+            <div
+              *ngIf="passwordField.invalid && passwordField.touched"
+              class="text-danger"
+            >
+              <small
+                >Password must have minimum eight characters, at least one
+                uppercase letter, one lowercase letter, one number and one
+                special character.</small
+              >
+            </div>
+            <div class="form-group my-2">
               <label for="confirmPassword">Confirm Password</label>
               <input
-                type="password"
+                [type]="showPassword ? 'text' : 'password'"
                 id="confirmPassword"
                 class="form-control"
                 [(ngModel)]="confirmPassword"
                 name="confirmPassword"
+                #confirmPasswordField="ngModel"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                 required
               />
             </div>
-            <button
-              type="submit"
-              class="btn btn-primary btn-block"
-              (click)="register()"
+            <div
+              *ngIf="
+                confirmPasswordField.invalid && confirmPasswordField.touched
+              "
+              class="text-danger"
             >
+              <small> Confirm Password is required.</small>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                name="showPassword"
+                [(ngModel)]="showPassword"
+              />
+              Show Password
+            </div>
+            <button type="submit" class="btn btn-primary btn-block my-2">
               Register
             </button>
           </form>

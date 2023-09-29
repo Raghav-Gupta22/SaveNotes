@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
       },
       (error) => {
         console.log('Error');
-        alert('No such user exist');
+        alert('Please check your credentials again!');
       }
     );
   }

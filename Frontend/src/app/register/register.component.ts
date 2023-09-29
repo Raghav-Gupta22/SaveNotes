@@ -13,6 +13,7 @@ export class RegisterComponent {
   password: string = '';
   confirmPassword: string = '';
   user = new User();
+  showPassword : Boolean = false;
   constructor(
     private userservice: UserserviceService,
     private router: Router

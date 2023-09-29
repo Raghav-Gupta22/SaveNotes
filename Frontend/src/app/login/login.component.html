@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-header">Login</div>
         <div class="card-body">
-          <form>
+          <form #loginForm="ngForm" (ngSubmit)="loginForm.valid && login()">
             <div class="form-group">
               <label for="Email">Email</label>
               <input
@@ -13,8 +13,15 @@
                 class="form-control"
                 [(ngModel)]="Email"
                 name="Email"
+                #emailField="ngModel"
                 required
               />
+            </div>
+            <div
+              *ngIf="emailField.invalid && emailField.touched"
+              class="text-danger"
+            >
+              Email is required
             </div>
             <div class="form-group">
               <label for="password">Password</label>
@@ -24,17 +31,19 @@
                 class="form-control"
                 [(ngModel)]="password"
                 name="password"
+                #passwordField="ngModel"
                 required
               />
-
+              <div
+                *ngIf="passwordField.invalid && passwordField.touched"
+                class="text-danger"
+              >
+                Password is required
+              </div>
               <input type="checkbox" name="showPassword" [(ngModel)]="show" />
               Show password
             </div>
-            <button
-              type="submit"
-              class="btn btn-primary btn-block my-2"
-              (click)="login()"
-            >
+            <button type="submit" class="btn btn-primary btn-block my-2">
               Login
             </button>
           </form>
